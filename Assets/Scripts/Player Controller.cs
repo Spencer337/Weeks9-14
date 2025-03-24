@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float laserTime;
     public int bulletNumber;
     public Vector3 startingPos;
+    public UnityEvent onSpace;
+    public GameObject bulletPrefab;
     void Start()
     {
         startingPos = transform.position;
@@ -34,5 +37,17 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = startingPos;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            onSpace.Invoke();
+        }
+    }
+
+    public void FireBullet()
+    {
+        GameObject newBullet = Instantiate(bulletPrefab);
+        newBullet.transform.position = transform.position;
+        bulletNumber++;
     }
 }
