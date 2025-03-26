@@ -6,12 +6,16 @@ public class Knight : MonoBehaviour
 {
     Animator animator;
     SpriteRenderer sr;
+    AudioSource footstep;
+    public AudioClip[] footsteps;  
     public float speed = 2;
     public bool canRun = true;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        footstep = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,6 +52,8 @@ public class Knight : MonoBehaviour
 
     public void FootstepSound()
     {
-
+        Debug.Log("Playing");
+        footstep.PlayOneShot(footsteps[Random.Range(0, footsteps.Length)]);
+        
     }
 }
