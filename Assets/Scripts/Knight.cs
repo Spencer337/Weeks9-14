@@ -45,4 +45,9 @@ public class Knight : MonoBehaviour
     {
         canRun = true;
     }
+
+    public void FootstepSound()
+    {
+
+    }
 }
