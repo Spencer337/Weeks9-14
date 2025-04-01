@@ -463,13 +463,16 @@ MonoBehaviour:
   speed: 5
   t: 0
   laserTime: 3
+  bulletsFired: 0
   bulletNumber: 0
   startingPos: {x: 0, y: 0, z: 0}
   onSpace:
     m_PersistentCalls:
       m_Calls: []
   bulletPrefab: {fileID: 2495614350148089863, guid: 63606eafc9e97e347b294efe7353c26c, type: 3}
+  bullets: []
   laser: {fileID: 380751365}
+  spawner: {fileID: 699907674}
 --- !u!212 &1965265867
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float t;
     public float laserTime = 5;
     public int bulletsFired;
-    public int bulletNumber = 0;
+    //public int bulletNumber = 0;
     public Vector3 startingPos;
     public UnityEvent onSpace;
     public GameObject bulletPrefab;
@@ -55,6 +55,10 @@ public class PlayerController : MonoBehaviour
             onSpace.Invoke();
             onSpace.RemoveListener(ActivateLaser);
         }
+        if (bullets.Count > 0)
+        {
+            CheckCollision();
+        }
     }
 
     public void FireBullet()
@@ -65,6 +69,8 @@ public class PlayerController : MonoBehaviour
         Bullet b = newBullet.GetComponent<Bullet>();
         bullets.Add(newBullet);
         bulletsFired++;
+
+        //bulletNumber++;
     }
 
     public void ActivateLaser()
@@ -74,12 +80,12 @@ public class PlayerController : MonoBehaviour
 
     public void CheckCollision()
     {
-        for (int j = bulletNumber - 1; j >= 0; j--)
+        for (int j = bullets.Count - 1; j >= 0; j--)
         {
-            for (int i = spawner.howManyAsteroids - 1; i >= 0; i--)
+            for (int i = spawner.asteroids.Count - 1; i >= 0; i--)
             {
                 float distance = Vector3.Distance(spawner.asteroids[i].transform.position, bullets[j].transform.position);
-                if (distance <= 10)
+                if (distance <= 1)
                 {
                     Debug.Log("Colliding");
                 }
@@ -100,4 +106,9 @@ public class PlayerController : MonoBehaviour
         laser.SetActive(false);
         onSpace.AddListener(FireBullet);
     }
+
+    //public void DeleteBullet(GameObject b)
+    //{
+    //    bullets.Remove(b);
+    //}
 }
