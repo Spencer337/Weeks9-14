@@ -10,15 +10,19 @@ public class PlayerController : MonoBehaviour
     public float speed = 5;
     public float t;
     public float laserTime = 5;
-    public int bulletNumber;
+    public int bulletsFired;
+    public int bulletNumber = 0;
     public Vector3 startingPos;
     public UnityEvent onSpace;
     public GameObject bulletPrefab;
+    public List<GameObject> bullets;
     public GameObject laser;
+    public AsteroidSpawner spawner;
     void Start()
     {
         startingPos = transform.position;
         onSpace.AddListener(FireBullet);
+        bullets = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -39,11 +43,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = startingPos;
         }
-        if (bulletNumber == 20)
+        if (bulletsFired == 50)
         {
             onSpace.RemoveListener(FireBullet);
             onSpace.AddListener(ActivateLaser);
-            bulletNumber = 0;
+            bulletsFired = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -57,12 +61,30 @@ public class PlayerController : MonoBehaviour
     {
         GameObject newBullet = Instantiate(bulletPrefab);
         newBullet.transform.position = transform.position;
-        bulletNumber++;
+
+        Bullet b = newBullet.GetComponent<Bullet>();
+        bullets.Add(newBullet);
+        bulletsFired++;
     }
 
     public void ActivateLaser()
     {
         StartCoroutine(FireLaser());
+    }
+
+    public void CheckCollision()
+    {
+        for (int j = bulletNumber - 1; j >= 0; j--)
+        {
+            for (int i = spawner.howManyAsteroids - 1; i >= 0; i--)
+            {
+                float distance = Vector3.Distance(spawner.asteroids[i].transform.position, bullets[j].transform.position);
+                if (distance <= 10)
+                {
+                    Debug.Log("Colliding");
+                }
+            }
+        }
     }
 
     IEnumerator FireLaser()
