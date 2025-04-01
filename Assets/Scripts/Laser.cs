@@ -22,14 +22,15 @@ public class Laser : MonoBehaviour
         transform.position = pos;
         Vector3 laserTempPos = transform.position;
         laserTempPos.x = 0;
-        for (int i = spawner.howManyAsteroids - 1; i >= 0; i--)
+        for (int i = spawner.asteroids.Count - 1; i >= 0; i--)
         {
             Vector3 asteroidTempPos = spawner.asteroids[i].transform.position;
             asteroidTempPos.x = 0;
             float distance = Vector3.Distance(asteroidTempPos, laserTempPos);
             if (distance <= 1)
             {
-                Debug.Log("Colliding");
+                Destroy(spawner.asteroids[i]);
+                spawner.asteroids.RemoveAt(i);
             }
         }
 

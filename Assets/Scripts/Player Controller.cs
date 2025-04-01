@@ -2,8 +2,10 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = startingPos;
         }
-        if (bulletsFired == 50)
+        if (bulletsFired == 3)
         {
             onSpace.RemoveListener(FireBullet);
             onSpace.AddListener(ActivateLaser);
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
         {
             CheckCollision();
         }
+        RemoveBullet();
     }
 
     public void FireBullet()
@@ -69,8 +72,6 @@ public class PlayerController : MonoBehaviour
         Bullet b = newBullet.GetComponent<Bullet>();
         bullets.Add(newBullet);
         bulletsFired++;
-
-        //bulletNumber++;
     }
 
     public void ActivateLaser()
@@ -87,8 +88,26 @@ public class PlayerController : MonoBehaviour
                 float distance = Vector3.Distance(spawner.asteroids[i].transform.position, bullets[j].transform.position);
                 if (distance <= 1)
                 {
+                    Destroy(spawner.asteroids[i]);
+                    spawner.asteroids.RemoveAt(i);
+                    Destroy(bullets[j]);
+                    bullets.RemoveAt(j);
                     Debug.Log("Colliding");
                 }
+            }
+        }
+    }
+
+    public void RemoveBullet()
+    {
+        for (int j = bullets.Count - 1; j >= 0; j--)
+        {
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(bullets[j].transform.position);
+            if (screenPos.x > Screen.width)
+            {
+                Debug.Log("should be deleted");
+                Destroy(bullets[j]);
+                bullets.RemoveAt(j);
             }
         }
     }
@@ -107,8 +126,8 @@ public class PlayerController : MonoBehaviour
         onSpace.AddListener(FireBullet);
     }
 
-    //public void DeleteBullet(GameObject b)
-    //{
-    //    bullets.Remove(b);
-    //}
+    public void DeleteBullet(GameObject a)
+    {
+        bullets.Remove(a);
+    }
 }

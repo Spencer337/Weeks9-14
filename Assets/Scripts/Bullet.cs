@@ -8,7 +8,8 @@ public class Bullet : MonoBehaviour
     public AsteroidSpawner spawner;
     public PlayerController player;
     public float speed = 2;
-    //public Coroutine MoveBullet;
+    public bool isDead = false;
+    //public Vector2 screenPos = Vector2.zero;
 
     void Start()
     {
@@ -28,14 +29,12 @@ public class Bullet : MonoBehaviour
             Vector3 pos = transform.position;
             pos.x += speed * Time.deltaTime;
             transform.position = pos;
-            Vector2 screenPos = Camera.main.WorldToScreenPoint(pos);
-            if (screenPos.x > Screen.width)
-            {
-                //Bullet.Destroy(gameObject);
-                //player.DeleteBullet(gameObject);
-                //break;
-            }
             yield return null;
         }
+    }
+
+    public void deleteSelf()
+    {
+        Bullet.Destroy(gameObject);
     }
 }

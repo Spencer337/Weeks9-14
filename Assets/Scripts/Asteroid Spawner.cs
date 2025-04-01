@@ -35,8 +35,8 @@ public class AsteroidSpawner : MonoBehaviour
         }
     }
 
-    //public void AsteroidHit(GameObject t)
-    //{
-    //    asteroids.Remove(a);
-    //}
+    public void AsteroidHit(GameObject a)
+    {
+        asteroids.Remove(a);
+    }
 }

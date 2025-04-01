@@ -97,4 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41193c9e1df91a24893b33cb9536925c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
+  player: {fileID: 0}
   speed: 2
+  isDead: 0
+  screenPos: {x: 1, y: 1}

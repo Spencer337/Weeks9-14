@@ -8,6 +8,7 @@ public class Asteroid : MonoBehaviour
     float t;
     public int health = 1;
     public AsteroidSpawner spawner;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +21,10 @@ public class Asteroid : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x += speed * Time.deltaTime;
         transform.position = pos;
+        if (transform.position.x < -5.5)
+        {
+            spawner.AsteroidHit(gameObject);
+            Destroy(gameObject);
+        }
     }
 }
