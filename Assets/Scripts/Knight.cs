@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Knight : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Knight : MonoBehaviour
     public AudioClip[] footsteps;  
     public float speed = 2;
     public bool canRun = true;
+    public CinemachineImpulseSource impulseSource;
 
     void Start()
     {
@@ -54,6 +56,7 @@ public class Knight : MonoBehaviour
     {
         Debug.Log("Playing");
         footstep.PlayOneShot(footsteps[Random.Range(0, footsteps.Length)]);
-        
+        impulseSource.GenerateImpulse();
+
     }
 }
