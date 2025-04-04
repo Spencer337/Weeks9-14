@@ -13,16 +13,18 @@ public class PlayerController : MonoBehaviour
     public float t;
     public float laserTime = 5;
     public int bulletsFired;
-    //public int bulletNumber = 0;
     public Vector3 startingPos;
     public UnityEvent onSpace;
+    public UnityEvent onScore;
     public GameObject bulletPrefab;
     public List<GameObject> bullets;
     public GameObject laser;
     public AsteroidSpawner spawner;
+    public ScoreManager score;
     void Start()
     {
         startingPos = transform.position;
+        onScore.AddListener(score.UpdateScore);
         onSpace.AddListener(FireBullet);
         bullets = new List<GameObject>();
     }
@@ -32,8 +34,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos.x += speed * Time.deltaTime;
-        
-        
 
         Vector2 screenPos = Camera.main.WorldToScreenPoint(pos);
 
@@ -45,13 +45,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = startingPos;
         }
-        if (bulletsFired == 3)
+        if (bulletsFired == 10)
         {
             onSpace.RemoveListener(FireBullet);
             onSpace.AddListener(ActivateLaser);
             bulletsFired = 0;
         }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             onSpace.Invoke();
@@ -92,7 +91,7 @@ public class PlayerController : MonoBehaviour
                     spawner.asteroids.RemoveAt(i);
                     Destroy(bullets[j]);
                     bullets.RemoveAt(j);
-                    Debug.Log("Colliding");
+                    onScore.Invoke();
                 }
             }
         }
@@ -105,7 +104,7 @@ public class PlayerController : MonoBehaviour
             Vector2 screenPos = Camera.main.WorldToScreenPoint(bullets[j].transform.position);
             if (screenPos.x > Screen.width)
             {
-                Debug.Log("should be deleted");
+                //Debug.Log("should be deleted");
                 Destroy(bullets[j]);
                 bullets.RemoveAt(j);
             }

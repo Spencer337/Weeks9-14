@@ -35,6 +35,6 @@ public class Bullet : MonoBehaviour
 
     public void deleteSelf()
     {
-        Bullet.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

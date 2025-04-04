@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Laser : MonoBehaviour
 {
     public GameObject player;
     public AsteroidSpawner spawner;
-    //public float t;
-    //public float laserTime;
-    // Start is called before the first frame update
+    public UnityEvent onScore;
+    public ScoreManager score;
+
     void Start()
     {
-        
+        onScore.AddListener(score.UpdateScore);
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class Laser : MonoBehaviour
             {
                 Destroy(spawner.asteroids[i]);
                 spawner.asteroids.RemoveAt(i);
+                onScore.Invoke();
             }
         }
 
