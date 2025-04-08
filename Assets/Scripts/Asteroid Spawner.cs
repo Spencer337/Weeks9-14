@@ -6,21 +6,23 @@ using static UnityEngine.GraphicsBuffer;
 public class AsteroidSpawner : MonoBehaviour
 {
     public GameObject asteroidPrefab;
-    public int howManyAsteroids = 0;
     public List<GameObject> asteroids;
     public float t = 0;
     public float interval = 3;
-    // Start is called before the first frame update
+    
     void Start()
     {
+        // Create a new list of asteroids
         asteroids = new List<GameObject>();
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         t += Time.deltaTime;
+        // Every three seconds, spawn a new asteroid at the right side of the screen, with a random y value
+        // Add the asteroid to a list of asteroids
         if (t >= interval)
         {
             GameObject newAsteroid = Instantiate(asteroidPrefab);
@@ -30,7 +32,6 @@ public class AsteroidSpawner : MonoBehaviour
             a.spawner = this;
 
             asteroids.Add(newAsteroid);
-            howManyAsteroids++;
             t = 0;
         }
     }

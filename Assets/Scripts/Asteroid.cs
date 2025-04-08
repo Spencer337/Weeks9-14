@@ -9,27 +9,20 @@ public class Asteroid : MonoBehaviour
     public int health = 1;
     public AsteroidSpawner spawner;
     public GameObject player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
+        // Move to the left at a consistent speed
         Vector3 pos = transform.position;
         pos.x += speed * Time.deltaTime;
         transform.position = pos;
+
+        // If the asteroid's x value is less than -5.5, delete the asteroid 
         if (transform.position.x < -5.5)
         {
             spawner.AsteroidHit(gameObject);
             Destroy(gameObject);
         }
-    }
-
-    public void deleteSelf()
-    {
-        Destroy(gameObject);
     }
 }

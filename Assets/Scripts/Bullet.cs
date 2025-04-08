@@ -9,10 +9,10 @@ public class Bullet : MonoBehaviour
     public PlayerController player;
     public float speed = 2;
     public bool isDead = false;
-    //public Vector2 screenPos = Vector2.zero;
 
     void Start()
     {
+        // Start the coroutine to move the bullet
         StartCoroutine(MoveBullet());
     }
 
@@ -22,6 +22,7 @@ public class Bullet : MonoBehaviour
         
     }
 
+    // Keep the bullet moving to the right at a constant speed
     IEnumerator MoveBullet()
     {
         while (true)
@@ -31,10 +32,5 @@ public class Bullet : MonoBehaviour
             transform.position = pos;
             yield return null;
         }
-    }
-
-    public void deleteSelf()
-    {
-        Destroy(gameObject);
     }
 }
